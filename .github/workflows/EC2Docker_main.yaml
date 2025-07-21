@@ -1,3 +1,9 @@
+name: CICD Pipeline Build  DockerHub push then pull then EC2 Deploy
+
+on:
+  push:
+    branches:
+      - master
 jobs:
   build-push-deploy:
     runs-on: ubuntu-latest
