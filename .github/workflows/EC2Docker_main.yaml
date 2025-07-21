@@ -38,7 +38,7 @@ jobs:
             echo "SERPER_API_KEY=${{ secrets.SERPER_API_KEY }}" >> .env
 
             # pull, stop, remove, and run container
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/langchainragfaqwithtool:latest
-            docker stop langchainragfaqwithtool || true
-            docker rm langchainragfaqwithtool || true
-            docker run -d --env-file .env -p 3000:5000 --name langchainragfaqwithtool ${{ secrets.DOCKERHUB_USERNAME }}/langchainragfaqwithtool:latest
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/langchainragfaqwithtool:latest
+            sudo docker stop langchainragfaqwithtool || true
+            sudo docker rm langchainragfaqwithtool || true
+            sudo docker run -d --env-file .env -p 3000:5000 --name langchainragfaqwithtool ${{ secrets.DOCKERHUB_USERNAME }}/langchainragfaqwithtool:latest
