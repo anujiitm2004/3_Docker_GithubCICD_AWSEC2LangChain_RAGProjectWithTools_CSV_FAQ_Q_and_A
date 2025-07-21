@@ -10,6 +10,7 @@ if btn:
 
 question = st.text_input("Question: ")
 
+
 # if question:
 #
 #     # chain = get_qa_chain()
