@@ -1,0 +1,40 @@
+jobs:
+  build-push-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to DockerHub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Build Docker Image
+        run: docker build -t LangChainRagFAQWithTool:latest .
+
+      - name: Push to DockerHub
+        run: |
+          docker tag LangChainRagFAQWithTool:latest ${{ secrets.DOCKERHUB_USERNAME }}/LangChainRagFAQWithTool:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/LangChainRagFAQWithTool:latest
+
+      - name: Deploy on EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            # create .env
+            cat <<EOF > .env
+OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+SERPER_API_KEY=${{ secrets.SERPER_API_KEY }}
+EOF
+
+            # pull, stop, remove, and run container
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/LangChainRagFAQWithTool:latest
+            docker stop LangChainRagFAQWithTool || true
+            docker rm LangChainRagFAQWithTool || true
+            docker run -d --env-file .env -p 3000:5000 --name LangChainRagFAQWithTool ${{ secrets.DOCKERHUB_USERNAME }}/LangChainRagFAQWithTool:latest

@@ -1,0 +1,199 @@
+chatgpt : https://chatgpt.com/share/687d51db-36bc-8010-bf7a-bd25ef4edcaf
+
+End To End Machine Learning Project Implementation With Dockers,Github Actions And Deployment
+https://www.youtube.com/watch?v=MJ1vWb1rGwM
+
+
+Q. ye cide yaml code heroku par deploy karta hai..muje esme change chayiye jisse heroku kee jagah aws ec2 par deploy ho sake ye model, change accordingly code
+
+https://chatgpt.com/share/68599162-5a7c-8010-87ee-4b86ed041a5b
+------------------------------------------------------
+virtual env mai run karna:
+
+python -m venv venv
+myenv\Scripts\activate
+venv\Scripts\activate
+pip3 install -r requirements.txt
+python app.py
+streamlit run main.py
+
+
+Docker mai run karna on local comuputer: 
+docker build -t anuj1 .      ; build the image
+docker images                ; checking no. of docker images
+docker ps -a                 ; checking docker container
+docker run -p 9000:5000 anuj1 ; run the container
+
+docker image rm -f anuj1
+docker image rm -f anujiitm2004/studentplacementpredictor
+
+docker tag anuj1 anujiitm2004/anuj1:v1
+docker push anujiitm2004/anuj1:v1      ; push image to dockerhub
+
+
+
+Step 1: Stop all running containers
+docker stop $(docker ps -q)
+
+Step 2: Remove all containers
+docker rm $(docker ps -aq)
+
+Step 3: Remove all images
+docker rmi $(docker images -q)
+
+Ek hi baar me sab kuch clean karne ka One-liner:
+docker stop $(docker ps -q) && docker rm $(docker ps -aq) && docker rmi -f $(docker images -q)
+-----------------------------------------------------
+Docker mai run karna on aws ec2 cloud:
+docker build -t anujiitm2004/s1 .  build the image from local computer ;docker ho on local
+docker push anujiitm2004/s1        push on dockerhub
+
+Install Docker in EC2 Ubuntu (if not already):
+sudo apt update
+sudo apt install docker.io -y
+sudo usermod -aG docker ubuntu
+newgrp docker
+
+docker pull anujiitm2004/s1        pull from dockerhub on ec2/local or wherever, bas waha kee cmd/putty mai      pull karo
+docker run -p 500:5000 anujiitm2004/k1 ;    run the container
+http://127.0.0.1:9000/             accessing application from local if running on local
+http://ec2-13-220-48-35.compute-1.amazonaws.com:9000/                accessing application from local if docker image running on aws ec2.
+
+------------------------------------
+
+aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 273354648955.dkr.ecr.us-east-1.amazonaws.com/krismine1
+
+
+AWS Ec2:
+sudo apt-get update && sudo apt-get install python3-pip
+pip3 install -r requirements.txt
+
+----------------------------------------------------
+docker build -t anujiitm2004/s1 . 
+docker build -t anujiitm2004/a1 .      ; build the image
+docker build -t anujiitm2004/anuj1 .  ;(username/imagename)
+docker build -t anujiitm2004/studentplacementpredictor_alpine:latest .
+
+
+
+
+docker images                ; checking no. of docker images
+docker ps -a                 ; checking docker container
+docker run -p 9000:5000 anuj1 ; run the container
+docker stop dd0ff6ddf659
+
+docker image rm -f anuj1
+docker image rm -f anujiitm2004/studentplacementpredictor
+
+docker tag anujiitm2004/studentplacementpredictor anujiitm2004/studentplacementpredictor1 ;(rename normal to normal1)
+docker push anujiitm2004/s1
+
+docker push anujiitm2004/studentplacementpredictor:latest
+docker push anujiitm2004/studentplacementpredictor_alpine:latest
+
+
+
+docker pull anujiitm2004/a1
+
+docker pull anujiitm2004/s1
+docker pull anujiitm2004/studentplacementpredictor:latest
+
+docker run -p 6000:5000 anujiitm2004/s1
+docker run -p 1000:5000 anujiitm2004/studentplacementpredictor_slim1:latest ; run the container
+
+--------------------------
+
+ubuntu mai:
+
+sudo docker pull anujiitm2004/studentplacementpredictor:latest
+sudo docker pull anujiitm2004/a1
+
+
+sudo docker images
+docker run -d -p 8000:5000 --name myapp anujiitm2004/studentplacementpredictor:latest
+docker run -d -p 8000:5000 --name myapp anujiitm2004/a1
+
+
+firewall issue  : sudo ufw allow from any
+sudo ufw allow proto tcp from any
+
+sudo ufw allow 5000/tcp
+sudo ufw allow 8000/tcp
+sudo ufw reload
+sudo ufw disable
+
+----------------------------------------------
+To push on ECR
+
+---------------------------------------------
+ssh(Secure Shell) – EC2 ke andar ghus jao (ec2 ke terminal access ke liye, means remote machine ke cmd ko access ke liye from local machine)
+ssh -i mykey.pem ubuntu@3.110.85.22
+
+scp = secure copye command use hoti hai file ko: Local → EC2 bhejne ke liye, EC2 → Local laane ke liye
+scp -i "C:\Users\Anuj Gupta\Desktop\key1.pem" "C:\Users\Anuj Gupta\Desktop\plot.xlsx" ubuntu@ec2-54-90-90-234.compute-1.amazonaws.com:/home/ubuntu/
+
+python main_OpenAI.py
+
+
+sudo apt-get update && sudo apt-get install python3-pip
+
+pip3 install -r requirements.txt
+
+venv\Scripts\activate 
+python main_OpenAI.py
+or
+streamlit run main_OpenAI.py  
+
+
+git init 
+git remote add origin https://github.com/anujiitm2004/StudentPlacementPredictor.git
+git remote add origin https://github.com/anujiitm2004/DockerCICDStudentplacementPredictor.git
+git remote add origin https://github.com/anujiitm2004/KrisCICDPipelineDockerAWS_EC2bostonhousepricing.git
+git status
+git add .
+git commit -m "initial commit"
+git rebase origin/master (this was extra added via chatgpt as without this it was giving error)
+git push origin master
+
+
+sudo apt-get update && sudo apt-get install python3-pip
+
+pip3 install -r requirements.txt
+
+pip freeze > 1.txt
+
+---------------------------------------
+
+ubuntu mai:
+
+
+
+sudo docker pull anujiitm2004/studentplacementpredictor:latest
+sudo docker images
+docker run -d -p 8000:5000 --name myapp anujiitm2004/studentplacementpredictor:latest
+
+firewall issue  : sudo ufw allow from any
+sudo ufw allow proto tcp from any
+
+sudo ufw allow 5000/tcp
+sudo ufw reload
+sudo ufw disable
+
+----------------------------------------------
+To push on ECR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
