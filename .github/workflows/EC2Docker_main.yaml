@@ -19,12 +19,12 @@ jobs:
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Build Docker Image
-        run: docker build -t LangChainRagFAQWithTool:latest .
+        run: docker build -t langchainragfaqwithtool:latest .
 
       - name: Push to DockerHub
         run: |
-          docker tag LangChainRagFAQWithTool:latest ${{ secrets.DOCKERHUB_USERNAME }}/LangChainRagFAQWithTool:latest
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/LangChainRagFAQWithTool:latest
+          docker tag langchainragfaqwithtool:latest ${{ secrets.DOCKERHUB_USERNAME }}/langchainragfaqwithtool:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/langchainragfaqwithtool:latest
 
       - name: Deploy on EC2
         uses: appleboy/ssh-action@v1.0.0
@@ -38,7 +38,7 @@ jobs:
             echo "SERPER_API_KEY=${{ secrets.SERPER_API_KEY }}" >> .env
 
             # pull, stop, remove, and run container
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/LangChainRagFAQWithTool:latest
-            docker stop LangChainRagFAQWithTool || true
-            docker rm LangChainRagFAQWithTool || true
-            docker run -d --env-file .env -p 3000:5000 --name LangChainRagFAQWithTool ${{ secrets.DOCKERHUB_USERNAME }}/LangChainRagFAQWithTool:latest
+            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/langchainragfaqwithtool:latest
+            docker stop langchainragfaqwithtool || true
+            docker rm langchainragfaqwithtool || true
+            docker run -d --env-file .env -p 3000:5000 --name langchainragfaqwithtool ${{ secrets.DOCKERHUB_USERNAME }}/langchainragfaqwithtool:latest
