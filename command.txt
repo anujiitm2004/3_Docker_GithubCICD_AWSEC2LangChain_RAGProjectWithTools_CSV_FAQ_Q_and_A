@@ -7,7 +7,7 @@ https://www.youtube.com/watch?v=MJ1vWb1rGwM
 Q. ye cide yaml code heroku par deploy karta hai..muje esme change chayiye jisse heroku kee jagah aws ec2 par deploy ho sake ye model, change accordingly code
 
 https://chatgpt.com/share/68599162-5a7c-8010-87ee-4b86ed041a5b
-------------------------------------------------------
+--------------------------------------------------------
 virtual env mai run karna:
 
 python -m venv venv
