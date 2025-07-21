@@ -3,7 +3,7 @@ from langchain_helper import get_qa_chain, create_vector_db
 from langchain_helper import llm
 from langchain_core.messages import HumanMessage
 
-st.title("Codebasics Q&A 🌱")
+st.title("AI GenAI LLM Q&A 🌱")
 btn = st.button("Create Knowledgebase")
 if btn:
     create_vector_db()
